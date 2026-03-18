@@ -7,11 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root {
+:root{
   --bg:#080b10;--bg2:#0d1117;--bg3:#131920;--bg4:#1a2232;
   --border:#1e2a3a;--border2:#28374f;
   --accent:#00d4ff;--accent2:#0099bb;
-  --green:#00e5a0;--red:#ff4757;--yellow:#ffc107;--orange:#ff6b35;
+  --green:#00e5a0;--red:#ff4757;--yellow:#ffc107;--orange:#ff6b35;--purple:#a78bfa;
   --text:#dde6f0;--text2:#7a8fa8;--text3:#394f66;
   --mono:'JetBrains Mono',monospace;--sans:'Syne',sans-serif;
   --sidebar:230px;--r:4px;
@@ -24,7 +24,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 
-/* ── SHARED ── */
+/* SHARED */
 .field{margin-bottom:18px;}
 .field label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:7px;}
 .field input,.field select,.field textarea{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:13px;padding:11px 13px;border-radius:var(--r);outline:none;transition:border-color .2s;}
@@ -36,7 +36,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .btn-primary:active{transform:scale(.98);}
 .btn-primary:disabled{background:var(--border2);color:var(--text3);cursor:not-allowed;}
 
-/* ── LOGIN ── */
+/* LOGIN */
 #loginPage{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:var(--bg);padding:20px;}
 .login-wrap{width:100%;max-width:390px;position:relative;}
 .login-glow{position:absolute;width:280px;height:280px;background:radial-gradient(circle,rgba(0,212,255,.1) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
@@ -48,7 +48,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .login-brand p{font-size:10px;color:var(--text2);margin-top:4px;letter-spacing:2px;text-transform:uppercase;}
 .login-err{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:var(--red);font-size:11px;padding:10px 13px;border-radius:var(--r);margin-top:12px;display:none;text-align:center;}
 
-/* ── APP ── */
+/* APP */
 #app{display:none;min-height:100vh;position:relative;z-index:1;}
 
 /* SIDEBAR */
@@ -63,7 +63,6 @@ nav.nav{padding:12px 0;flex:1;overflow-y:auto;}
 .nav-item:hover{color:var(--text);background:rgba(255,255,255,.025);}
 .nav-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(0,212,255,.06);}
 .nav-item .ni{font-size:15px;width:20px;text-align:center;}
-.nav-sep{height:1px;background:var(--border);margin:8px 18px;}
 .sb-user{padding:14px 18px;border-top:1px solid var(--border);}
 .u-name{color:var(--text);font-weight:600;font-size:12px;margin-bottom:2px;}
 .u-email{color:var(--text3);font-size:10px;word-break:break-all;}
@@ -72,7 +71,7 @@ nav.nav{padding:12px 0;flex:1;overflow-y:auto;}
 
 /* HAMBURGER */
 .hamburger{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--bg3);border:1px solid var(--border2);width:40px;height:40px;border-radius:var(--r);flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;}
-.hamburger span{width:18px;height:2px;background:var(--text);border-radius:1px;transition:all .2s;}
+.hamburger span{width:18px;height:2px;background:var(--text);border-radius:1px;}
 .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:49;backdrop-filter:blur(3px);}
 
 /* MAIN */
@@ -80,7 +79,6 @@ nav.nav{padding:12px 0;flex:1;overflow-y:auto;}
 .page{display:none;}
 .page.active{display:block;animation:fadeIn .25s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-
 .pg-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:26px;padding-bottom:18px;border-bottom:1px solid var(--border);gap:12px;flex-wrap:wrap;}
 .pg-header h2{font-family:var(--sans);font-size:20px;font-weight:800;}
 .pg-header p{font-size:11px;color:var(--text2);margin-top:3px;}
@@ -94,36 +92,50 @@ nav.nav{padding:12px 0;flex:1;overflow-y:auto;}
 .c-red::before{background:var(--red);}
 .c-orange::before{background:var(--orange);}
 .c-green::before{background:var(--green);}
+.c-purple::before{background:var(--purple);}
 .stat-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:10px;}
 .stat-val{font-family:var(--sans);font-size:30px;font-weight:800;}
 .c-blue .stat-val{color:var(--accent);}
 .c-red .stat-val{color:var(--red);}
 .c-orange .stat-val{color:var(--orange);}
 .c-green .stat-val{color:var(--green);}
+.c-purple .stat-val{color:var(--purple);}
 .stat-sub{font-size:10px;color:var(--text3);margin-top:4px;}
 
 .card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:20px;}
 .card-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:18px;font-weight:700;}
 
-/* TABLE */
-.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-table{width:100%;border-collapse:collapse;font-size:12px;min-width:500px;}
-thead th{text-align:left;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text3);padding:0 12px 12px;border-bottom:1px solid var(--border);white-space:nowrap;}
-tbody tr{border-bottom:1px solid var(--border);transition:background .15s;cursor:pointer;}
-tbody tr:hover{background:rgba(255,255,255,.02);}
-tbody tr:last-child{border-bottom:none;}
-tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
-
+/* BADGES - STATUS */
 .badge{display:inline-block;padding:3px 8px;border-radius:2px;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:600;white-space:nowrap;}
 .b-critico{background:rgba(255,107,53,.15);color:var(--orange);border:1px solid rgba(255,107,53,.3);}
 .b-alto{background:rgba(255,71,87,.15);color:var(--red);border:1px solid rgba(255,71,87,.3);}
 .b-medio{background:rgba(255,193,7,.1);color:var(--yellow);border:1px solid rgba(255,193,7,.3);}
 .b-baixo{background:rgba(0,229,160,.1);color:var(--green);border:1px solid rgba(0,229,160,.3);}
+/* status badges */
+.s-aberto{background:rgba(255,71,87,.12);color:var(--red);border:1px solid rgba(255,71,87,.3);}
+.s-andamento{background:rgba(255,193,7,.1);color:var(--yellow);border:1px solid rgba(255,193,7,.3);}
+.s-concluido{background:rgba(0,229,160,.1);color:var(--green);border:1px solid rgba(0,229,160,.3);}
+
+/* STATUS DOT */
+.sdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.sdot-aberto{background:var(--red);box-shadow:0 0 5px var(--red);}
+.sdot-andamento{background:var(--yellow);box-shadow:0 0 5px var(--yellow);}
+.sdot-concluido{background:var(--green);box-shadow:0 0 5px var(--green);}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:540px;}
+thead th{text-align:left;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text3);padding:0 12px 12px;border-bottom:1px solid var(--border);white-space:nowrap;}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s;cursor:pointer;}
+tbody tr:hover{background:rgba(255,255,255,.02);}
+tbody tr:last-child{border-bottom:none;}
+tbody td{padding:13px 12px;color:var(--text2);vertical-align:middle;}
 
 /* FORM */
 .form-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:26px;max-width:740px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
 .form-row.three{grid-template-columns:1fr 1fr 1fr;}
+.form-row.four{grid-template-columns:1fr 1fr 1fr 1fr;}
 .form-actions{margin-top:24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .btn-submit{background:var(--accent);color:#000;border:none;padding:12px 26px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:var(--r);transition:background .2s;}
 .btn-submit:hover{background:#33ddff;}
@@ -139,25 +151,84 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
 .fi:focus{border-color:var(--accent);}
 .fi::placeholder{color:var(--text3);}
 
-/* MODAL */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px);}
+/* ═══════════════════════════════════
+   MODAL DETALHES (reformulado)
+═══════════════════════════════════ */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:300;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px);}
 .modal-bg.open{display:flex;}
-.modal{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:26px;width:100%;max-width:540px;max-height:88vh;overflow-y:auto;position:relative;animation:fadeIn .2s ease;}
+.modal{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);width:100%;max-width:620px;max-height:90vh;overflow-y:auto;position:relative;animation:fadeIn .2s ease;}
 .modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--orange));}
-.modal-close{position:absolute;top:14px;right:14px;background:none;border:1px solid var(--border);color:var(--text2);font-size:14px;width:28px;height:28px;cursor:pointer;border-radius:var(--r);display:flex;align-items:center;justify-content:center;transition:all .2s;}
+
+/* Modal header */
+.modal-hdr{padding:22px 22px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.modal-hdr h3{font-family:var(--sans);font-size:17px;font-weight:800;}
+.modal-hdr-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.modal-close{background:none;border:1px solid var(--border);color:var(--text2);font-size:14px;width:28px;height:28px;cursor:pointer;border-radius:var(--r);display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
 .modal-close:hover{border-color:var(--red);color:var(--red);}
-.modal h3{font-family:var(--sans);font-size:17px;font-weight:800;margin-bottom:18px;padding-right:30px;}
-.dr{display:grid;grid-template-columns:110px 1fr;gap:8px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px;}
+
+/* Modal tabs */
+.modal-tabs{display:flex;gap:0;padding:16px 22px 0;border-bottom:1px solid var(--border);}
+.mtab{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);padding:8px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;margin-bottom:-1px;}
+.mtab:hover{color:var(--text2);}
+.mtab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* Modal tab panels */
+.mtab-panel{display:none;padding:20px 22px;}
+.mtab-panel.active{display:block;}
+
+/* Detail rows */
+.dr{display:grid;grid-template-columns:120px 1fr;gap:8px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px;align-items:start;}
 .dr:last-child{border-bottom:none;}
 .dl{color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-size:10px;padding-top:2px;}
 .dv{color:var(--text);line-height:1.65;}
+
+/* Edit mode */
+.edit-field{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 10px;border-radius:var(--r);outline:none;transition:border-color .2s;}
+.edit-field:focus{border-color:var(--accent);}
+.edit-field.ta{resize:vertical;min-height:70px;line-height:1.5;}
+.edit-actions{display:flex;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+.btn-save{background:var(--accent);color:#000;border:none;padding:9px 20px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:var(--r);transition:background .2s;}
+.btn-save:hover{background:#33ddff;}
+.btn-save:disabled{background:var(--border2);color:var(--text3);cursor:not-allowed;}
+.btn-cancel-edit{background:none;color:var(--text2);border:1px solid var(--border);padding:9px 18px;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:var(--r);transition:all .2s;}
+.btn-cancel-edit:hover{border-color:var(--text2);color:var(--text);}
+
+/* STATUS SELECTOR (edit) */
+.status-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.sbtn{padding:7px 14px;border-radius:var(--r);font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:600;cursor:pointer;border:1px solid var(--border);background:none;color:var(--text2);transition:all .2s;}
+.sbtn:hover{border-color:var(--text2);}
+.sbtn.sel-aberto{background:rgba(255,71,87,.15);color:var(--red);border-color:rgba(255,71,87,.4);}
+.sbtn.sel-andamento{background:rgba(255,193,7,.12);color:var(--yellow);border-color:rgba(255,193,7,.4);}
+.sbtn.sel-concluido{background:rgba(0,229,160,.12);color:var(--green);border-color:rgba(0,229,160,.4);}
+
+/* TIMELINE (atualizações) */
+.timeline{padding:4px 0;}
+.tl-item{display:flex;gap:14px;padding-bottom:20px;position:relative;}
+.tl-item::before{content:'';position:absolute;left:15px;top:30px;bottom:0;width:1px;background:var(--border);}
+.tl-item:last-child::before{display:none;}
+.tl-dot{width:30px;height:30px;border-radius:50%;background:var(--bg4);border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;z-index:1;}
+.tl-dot.criacao{border-color:var(--accent);background:rgba(0,212,255,.1);}
+.tl-dot.atualizacao{border-color:var(--purple);background:rgba(167,139,250,.1);}
+.tl-dot.conclusao{border-color:var(--green);background:rgba(0,229,160,.1);}
+.tl-content{flex:1;padding-top:4px;}
+.tl-author{font-size:11px;color:var(--text);font-weight:600;margin-bottom:2px;}
+.tl-date{font-size:10px;color:var(--text3);margin-bottom:6px;}
+.tl-text{font-size:12px;color:var(--text2);line-height:1.6;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;}
+
+/* Add update form */
+.add-update{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+.add-update-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:10px;}
+.add-update textarea{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:12px;padding:10px 12px;border-radius:var(--r);outline:none;resize:vertical;min-height:72px;line-height:1.5;transition:border-color .2s;}
+.add-update textarea:focus{border-color:var(--accent);}
+.add-update-actions{display:flex;gap:8px;margin-top:8px;align-items:center;}
+.tl-empty{text-align:center;padding:24px;color:var(--text3);font-size:12px;}
 
 /* TOAST */
 .toast{position:fixed;bottom:18px;right:18px;z-index:9999;font-size:12px;padding:11px 18px;border-radius:var(--r);display:none;animation:fadeIn .3s ease;max-width:calc(100vw - 36px);}
 .toast.ok{background:var(--bg4);border:1px solid var(--green);color:var(--green);}
 .toast.er{background:var(--bg4);border:1px solid var(--red);color:var(--red);}
 
-/* LOADING */
+/* SPINNER */
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ld-row td{padding:40px;text-align:center;color:var(--text3);}
@@ -165,7 +236,7 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
 .empty .ei{font-size:32px;margin-bottom:10px;}
 
 /* RESPONSIVE */
-@media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:1100px){.stats-grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:768px){
   .hamburger{display:flex;}
   .sidebar{transform:translateX(-100%);box-shadow:4px 0 30px rgba(0,0,0,.5);}
@@ -174,7 +245,7 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
   .main{margin-left:0;padding:68px 14px 24px;}
   .stats-grid{grid-template-columns:1fr 1fr;gap:10px;}
   .stat-val{font-size:24px;}
-  .form-row,.form-row.three{grid-template-columns:1fr;}
+  .form-row,.form-row.three,.form-row.four{grid-template-columns:1fr;}
   .form-card,.card{padding:16px;}
   .pg-header h2{font-size:17px;}
   .filters{flex-direction:column;}
@@ -182,18 +253,20 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
   .form-actions{flex-direction:column;align-items:stretch;}
   .btn-submit,.btn-outline{text-align:center;}
   .dr{grid-template-columns:95px 1fr;}
-  .modal{padding:20px 16px;}
+  .modal-hdr,.mtab-panel{padding-left:16px;padding-right:16px;}
+  .modal-tabs{padding-left:16px;}
+  .edit-actions{flex-direction:column;}
+  .btn-save,.btn-cancel-edit{text-align:center;}
 }
 @media(max-width:420px){
   .stat-val{font-size:20px;}
   .stat-lbl{font-size:9px;}
   .stat-card{padding:13px;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
 <body>
-
-
 
 <!-- LOGIN -->
 <div id="loginPage">
@@ -235,7 +308,6 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
       <div class="nav-item active" onclick="go('dashboard')"><span class="ni">📊</span>Dashboard</div>
       <div class="nav-item" onclick="go('registrar')"><span class="ni">➕</span>Nova Ocorrência</div>
       <div class="nav-item" onclick="go('historico')"><span class="ni">📋</span>Histórico</div>
-
     </nav>
     <div class="sb-user">
       <div class="u-name" id="sbName">—</div>
@@ -250,22 +322,20 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
     <div id="pgDashboard" class="page active">
       <div class="pg-header">
         <div><h2>Dashboard</h2><p id="dashDate">—</p></div>
-        <div class="hdr-right">
-          <button class="btn-outline" onclick="loadDash()" style="padding:8px 14px;font-size:10px">↻ Atualizar</button>
-        </div>
+        <button class="btn-outline" onclick="loadDash()" style="padding:8px 14px;font-size:10px">↻ Atualizar</button>
       </div>
       <div class="stats-grid">
         <div class="stat-card c-blue"><div class="stat-lbl">Total</div><div class="stat-val" id="stTotal">—</div><div class="stat-sub">todos os registros</div></div>
-        <div class="stat-card c-red"><div class="stat-lbl">Alta / Crítico</div><div class="stat-val" id="stAlta">—</div><div class="stat-sub">prioridade elevada</div></div>
-        <div class="stat-card c-orange"><div class="stat-lbl">Este Mês</div><div class="stat-val" id="stMes">—</div><div class="stat-sub" id="mesLbl">—</div></div>
-        <div class="stat-card c-green"><div class="stat-lbl">Hoje</div><div class="stat-val" id="stHoje">—</div><div class="stat-sub">registros do dia</div></div>
+        <div class="stat-card c-red"><div class="stat-lbl">Em Aberto</div><div class="stat-val" id="stAberto">—</div><div class="stat-sub">aguardando ação</div></div>
+        <div class="stat-card c-orange"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="stAndamento">—</div><div class="stat-sub">sendo resolvidas</div></div>
+        <div class="stat-card c-green"><div class="stat-lbl">Concluídas</div><div class="stat-val" id="stConcluido">—</div><div class="stat-sub" id="mesLbl">—</div></div>
       </div>
       <div class="card">
         <div class="card-title">Ocorrências Recentes</div>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>#</th><th>Problema</th><th>Responsável</th><th>Prioridade</th><th>Data</th></tr></thead>
-            <tbody id="dashTbl"><tr class="ld-row"><td colspan="5"><span class="spinner"></span></td></tr></tbody>
+            <thead><tr><th>#</th><th>Problema</th><th>Responsável</th><th>Status</th><th>Prioridade</th><th>Data</th></tr></thead>
+            <tbody id="dashTbl"><tr class="ld-row"><td colspan="6"><span class="spinner"></span></td></tr></tbody>
           </table>
         </div>
       </div>
@@ -283,7 +353,14 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
           <div class="field"><label>Responsável *</label><input type="text" id="fResp" placeholder="Nome do técnico / analista"></div>
           <div class="field"><label>Setor Afetado</label><input type="text" id="fSetor" placeholder="ex: Financeiro, RH..."></div>
         </div>
-        <div class="form-row three">
+        <div class="form-row four">
+          <div class="field"><label>Status</label>
+            <select id="fStatus">
+              <option value="Em Aberto">🔴 Em Aberto</option>
+              <option value="Em Andamento">🟡 Em Andamento</option>
+              <option value="Concluído">🟢 Concluído</option>
+            </select>
+          </div>
           <div class="field"><label>Prioridade</label>
             <select id="fPrio"><option value="Baixo">🟢 Baixo</option><option value="Médio" selected>🟡 Médio</option><option value="Alto">🔴 Alto</option><option value="Crítico">🔥 Crítico</option></select>
           </div>
@@ -310,30 +387,63 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
       </div>
       <div class="filters">
         <input class="fi" type="text" id="fiBusca" placeholder="🔍  Buscar..." oninput="debounceHist()" style="flex:1;min-width:160px">
+        <select class="fi" id="fiStatus" onchange="loadHist()">
+          <option value="">Todo status</option>
+          <option value="Em Aberto">Em Aberto</option>
+          <option value="Em Andamento">Em Andamento</option>
+          <option value="Concluído">Concluído</option>
+        </select>
         <select class="fi" id="fiPrio" onchange="loadHist()"><option value="">Toda prioridade</option><option value="Crítico">Crítico</option><option value="Alto">Alto</option><option value="Médio">Médio</option><option value="Baixo">Baixo</option></select>
         <select class="fi" id="fiCat" onchange="loadHist()"><option value="">Toda categoria</option><option value="Hardware">Hardware</option><option value="Software">Software</option><option value="Rede">Rede</option><option value="Segurança">Segurança</option><option value="Acesso">Acesso</option><option value="Backup">Backup</option><option value="Email">E-mail</option><option value="Outro">Outro</option></select>
       </div>
       <div class="card" style="padding:0">
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th style="padding-left:16px">#</th><th>Problema</th><th>Responsável</th><th>Categoria</th><th>Prioridade</th><th>Data</th></tr></thead>
+            <thead><tr><th style="padding-left:16px">#</th><th>Problema</th><th>Responsável</th><th>Status</th><th>Prioridade</th><th>Data</th></tr></thead>
             <tbody id="histTbl"><tr class="ld-row"><td colspan="6"><span class="spinner"></span></td></tr></tbody>
           </table>
         </div>
       </div>
     </div>
 
-
-
   </main>
 </div>
 
-<!-- MODAL -->
+<!-- MODAL DETALHES -->
 <div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h3 id="modalTitle">Ocorrência</h3>
-    <div id="modalBody"></div>
+  <div class="modal" id="modalBox">
+    <div class="modal-hdr">
+      <div>
+        <h3 id="modalTitle">Ocorrência</h3>
+        <div class="modal-hdr-meta" id="modalMeta"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-tabs">
+      <div class="mtab active" onclick="switchTab('detalhes')">Detalhes</div>
+      <div class="mtab" onclick="switchTab('editar')">✏️ Editar</div>
+      <div class="mtab" onclick="switchTab('atualizacoes')" id="tabAtual">Atualizações</div>
+    </div>
+    <!-- TAB: DETALHES -->
+    <div class="mtab-panel active" id="tabDetalhes">
+      <div id="modalBody"></div>
+    </div>
+    <!-- TAB: EDITAR -->
+    <div class="mtab-panel" id="tabEditar">
+      <div id="editForm"></div>
+    </div>
+    <!-- TAB: ATUALIZAÇÕES -->
+    <div class="mtab-panel" id="tabAtualizacoes">
+      <div class="timeline" id="timeline"></div>
+      <div class="add-update">
+        <div class="add-update-title">Nova Atualização</div>
+        <textarea id="newUpdateText" placeholder="Descreva o que foi feito ou qual é o novo status..."></textarea>
+        <div class="add-update-actions">
+          <button class="btn-save" id="btnAddUpdate" onclick="addUpdate()">ADICIONAR</button>
+          <span style="font-size:10px;color:var(--text3)" id="updateSaving"></span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -342,32 +452,27 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
 <script>
 const SB_URL = 'https://lwvqavtfrkotbngyqukk.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3dnFhdnRmcmtvdGJuZ3lxdWtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MzgyMzIsImV4cCI6MjA4OTQxNDIzMn0.kEHFz2xb9gc0qHSA6mQ3Ou5RBLEXsDnPJCIPong8ej4';
-let sb = null, usr = null, histCache = [];
+let sb = null, usr = null, histCache = [], currentOcorrencia = null;
 sb = window.supabase.createClient(SB_URL, SB_KEY);
 
-/* ── AUTH ── */
+/* ═══════ AUTH ═══════ */
 async function doLogin(){
   const email=document.getElementById('lEmail').value.trim();
   const pass=document.getElementById('lPass').value;
-  const btn=document.getElementById('btnLogin');
-  const err=document.getElementById('lErr');
-  err.style.display='none';
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+  const btn=document.getElementById('btnLogin'), err=document.getElementById('lErr');
+  err.style.display='none'; btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
   const {data,error}=await sb.auth.signInWithPassword({email,password:pass});
   btn.disabled=false; btn.textContent='ENTRAR';
   if(error){err.style.display='block';return;}
   usr=data.user; startApp();
 }
-
 async function doLogout(){
-  await sb.auth.signOut();
-  usr=null;
+  await sb.auth.signOut(); usr=null;
   document.getElementById('app').style.display='none';
   document.getElementById('loginPage').style.display='flex';
   document.getElementById('lEmail').value='';
   document.getElementById('lPass').value='';
 }
-
 function startApp(){
   document.getElementById('loginPage').style.display='none';
   document.getElementById('app').style.display='block';
@@ -377,44 +482,40 @@ function startApp(){
   setDefDate(); loadDash();
 }
 
-/* ── NAV ── */
+/* ═══════ NAV ═══════ */
 function go(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  const pMap={dashboard:'pgDashboard',registrar:'pgRegistrar',historico:'pgHistorico',recfg:'pgRecfg'};
-  const pg=document.getElementById(pMap[id]);
-  if(pg) pg.classList.add('active');
-  const niMap={dashboard:0,registrar:1,historico:2,recfg:3};
+  const pMap={dashboard:'pgDashboard',registrar:'pgRegistrar',historico:'pgHistorico'};
+  const pg=document.getElementById(pMap[id]); if(pg) pg.classList.add('active');
   const items=document.querySelectorAll('.nav-item');
-  if(items[niMap[id]]) items[niMap[id]].classList.add('active');
+  const ni={dashboard:0,registrar:1,historico:2};
+  if(items[ni[id]]) items[ni[id]].classList.add('active');
   if(id==='dashboard') loadDash();
   if(id==='historico') loadHist();
   closeSb();
 }
-
 function toggleSb(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sbOverlay').classList.toggle('open');}
 function closeSb(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbOverlay').classList.remove('open');}
 
-/* ── DASHBOARD ── */
+/* ═══════ DASHBOARD ═══════ */
 async function loadDash(){
   const now=new Date();
   document.getElementById('dashDate').textContent=now.toLocaleString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
-  document.getElementById('mesLbl').textContent=now.toLocaleString('pt-BR',{month:'long',year:'numeric'});
-  document.getElementById('dashTbl').innerHTML='<tr class="ld-row"><td colspan="5"><span class="spinner"></span></td></tr>';
+  document.getElementById('mesLbl').textContent='este mês: '+now.toLocaleString('pt-BR',{month:'long'});
+  document.getElementById('dashTbl').innerHTML='<tr class="ld-row"><td colspan="6"><span class="spinner"></span></td></tr>';
   const {data,error}=await sb.from('ocorrencias').select('*').order('data_ocorrencia',{ascending:false});
   if(error){toast('Erro ao carregar','er');return;}
-  const today=now.toISOString().slice(0,10), mes=now.toISOString().slice(0,7);
   document.getElementById('stTotal').textContent=data.length;
-  document.getElementById('stAlta').textContent=data.filter(o=>o.prioridade==='Alto'||o.prioridade==='Crítico').length;
-  document.getElementById('stMes').textContent=data.filter(o=>o.data_ocorrencia?.startsWith(mes)).length;
-  document.getElementById('stHoje').textContent=data.filter(o=>o.data_ocorrencia?.startsWith(today)).length;
-  const r=data.slice(0,8);
-  const tb=document.getElementById('dashTbl');
-  if(!r.length){tb.innerHTML='<tr><td colspan="5"><div class="empty"><div class="ei">📭</div>Nenhuma ocorrência ainda.</div></td></tr>';return;}
-  tb.innerHTML=r.map(o=>`<tr onclick='openModal(${esc(o)})'><td style="color:var(--text3)">#${o.id}</td><td>${tr(o.problema,50)}</td><td>${o.responsavel}</td><td>${bdg(o.prioridade)}</td><td>${fd(o.data_ocorrencia)}</td></tr>`).join('');
+  document.getElementById('stAberto').textContent=data.filter(o=>o.status==='Em Aberto'||!o.status).length;
+  document.getElementById('stAndamento').textContent=data.filter(o=>o.status==='Em Andamento').length;
+  document.getElementById('stConcluido').textContent=data.filter(o=>o.status==='Concluído').length;
+  const r=data.slice(0,8), tb=document.getElementById('dashTbl');
+  if(!r.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">📭</div>Nenhuma ocorrência ainda.</div></td></tr>';return;}
+  tb.innerHTML=r.map(o=>`<tr onclick='openModal(${esc(o)})'><td style="color:var(--text3)">#${o.id}</td><td>${tr(o.problema,46)}</td><td>${o.responsavel}</td><td>${stBdg(o.status)}</td><td>${bdg(o.prioridade)}</td><td>${fd(o.data_ocorrencia)}</td></tr>`).join('');
 }
 
-/* ── REGISTRAR ── */
+/* ═══════ REGISTRAR ═══════ */
 async function registrar(){
   const p=document.getElementById('fProblema').value.trim();
   const a=document.getElementById('fAcao').value.trim();
@@ -428,35 +529,36 @@ async function registrar(){
   const {error}=await sb.from('ocorrencias').insert([{
     problema:p, acao:a, responsavel:r,
     setor:document.getElementById('fSetor').value.trim()||null,
+    status:document.getElementById('fStatus').value,
     prioridade:document.getElementById('fPrio').value,
     categoria:document.getElementById('fCat').value,
-    data_ocorrencia:d,
-    registrado_por:usr.email
+    data_ocorrencia:d, registrado_por:usr.email
   }]);
   btn.disabled=false; btn.textContent='REGISTRAR';
   if(error){err.textContent='❌ '+error.message;err.style.display='block';return;}
   ok.style.display='block'; clearForm(); toast('Ocorrência registrada!','ok');
   setTimeout(()=>ok.style.display='none',4000);
 }
-
 function clearForm(){
   ['fProblema','fAcao','fResp','fSetor'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fStatus').value='Em Aberto';
   document.getElementById('fPrio').value='Médio';
   document.getElementById('fCat').value='Hardware';
   setDefDate();
 }
 function setDefDate(){const el=document.getElementById('fData');if(!el)return;const n=new Date();el.value=new Date(n.getTime()-n.getTimezoneOffset()*60000).toISOString().slice(0,16);}
 
-/* ── HISTÓRICO ── */
+/* ═══════ HISTÓRICO ═══════ */
 let histTimer=null;
 function debounceHist(){clearTimeout(histTimer);histTimer=setTimeout(loadHist,300);}
-
 async function loadHist(){
   document.getElementById('histTbl').innerHTML='<tr class="ld-row"><td colspan="6"><span class="spinner"></span></td></tr>';
   let q=sb.from('ocorrencias').select('*').order('data_ocorrencia',{ascending:false});
+  const st=document.getElementById('fiStatus').value;
   const prio=document.getElementById('fiPrio').value;
   const cat=document.getElementById('fiCat').value;
   const busca=document.getElementById('fiBusca').value.trim();
+  if(st)   q=q.eq('status',st);
   if(prio) q=q.eq('prioridade',prio);
   if(cat)  q=q.eq('categoria',cat);
   if(busca) q=q.or(`problema.ilike.%${busca}%,acao.ilike.%${busca}%,responsavel.ilike.%${busca}%,setor.ilike.%${busca}%`);
@@ -466,50 +568,218 @@ async function loadHist(){
   document.getElementById('histCnt').textContent=`${data.length} registro(s)`;
   const tb=document.getElementById('histTbl');
   if(!data.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="ei">🔍</div>Nenhuma ocorrência encontrada.</div></td></tr>';return;}
-  tb.innerHTML=data.map(o=>`<tr onclick='openModal(${esc(o)})'><td style="padding-left:16px;color:var(--text3)">#${o.id}</td><td>${tr(o.problema,44)}</td><td>${o.responsavel}</td><td style="color:var(--text2)">${o.categoria}</td><td>${bdg(o.prioridade)}</td><td>${fd(o.data_ocorrencia)}</td></tr>`).join('');
+  tb.innerHTML=data.map(o=>`<tr onclick='openModal(${esc(o)})'><td style="padding-left:16px;color:var(--text3)">#${o.id}</td><td>${tr(o.problema,40)}</td><td>${o.responsavel}</td><td>${stBdg(o.status)}</td><td>${bdg(o.prioridade)}</td><td>${fd(o.data_ocorrencia)}</td></tr>`).join('');
 }
 
-/* ── MODAL ── */
+/* ═══════ MODAL ═══════ */
 function openModal(o){
   if(typeof o==='string') o=JSON.parse(o);
+  currentOcorrencia=o;
   document.getElementById('modalTitle').textContent=`Ocorrência #${o.id}`;
+  document.getElementById('modalMeta').innerHTML=`${stBdg(o.status)} ${bdg(o.prioridade)} <span style="font-size:10px;color:var(--text3)">${o.categoria}</span>`;
+  // Tab detalhes
   document.getElementById('modalBody').innerHTML=[
     ['Problema',o.problema],['Ação Tomada',o.acao],['Responsável',o.responsavel],
     ['Setor',o.setor||'—'],['Categoria',o.categoria],['Prioridade',bdg(o.prioridade)],
-    ['Data',fd(o.data_ocorrencia)],['Registrado por',o.registrado_por||'—'],
+    ['Status',stBdg(o.status)],['Data',fd(o.data_ocorrencia)],
+    ['Registrado por',o.registrado_por||'—'],
     ['Criado em',`<span style="color:var(--text3)">${fd(o.created_at)}</span>`]
   ].map(([l,v])=>`<div class="dr"><div class="dl">${l}</div><div class="dv">${v}</div></div>`).join('');
+  // Tab editar
+  renderEditForm(o);
+  // Tab atualizações
+  loadTimeline(o.id);
+  // Reset tabs
+  switchTab('detalhes');
   document.getElementById('modalBg').classList.add('open');
 }
+
+function renderEditForm(o){
+  document.getElementById('editForm').innerHTML=`
+    <div style="margin-bottom:14px">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:8px">Status</div>
+      <div class="status-btns">
+        <button class="sbtn ${o.status==='Em Aberto'?'sel-aberto':''}" onclick="selectStatus(this,'Em Aberto')">🔴 Em Aberto</button>
+        <button class="sbtn ${o.status==='Em Andamento'?'sel-andamento':''}" onclick="selectStatus(this,'Em Andamento')">🟡 Em Andamento</button>
+        <button class="sbtn ${o.status==='Concluído'?'sel-concluido':''}" onclick="selectStatus(this,'Concluído')">🟢 Concluído</button>
+      </div>
+      <input type="hidden" id="editStatus" value="${o.status||'Em Aberto'}">
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:8px">Prioridade</div>
+      <select class="edit-field" id="editPrio">
+        <option value="Baixo" ${o.prioridade==='Baixo'?'selected':''}>🟢 Baixo</option>
+        <option value="Médio" ${o.prioridade==='Médio'?'selected':''}>🟡 Médio</option>
+        <option value="Alto" ${o.prioridade==='Alto'?'selected':''}>🔴 Alto</option>
+        <option value="Crítico" ${o.prioridade==='Crítico'?'selected':''}>🔥 Crítico</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:8px">Problema</div>
+      <textarea class="edit-field ta" id="editProblema">${o.problema}</textarea>
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:8px">Ação Tomada</div>
+      <textarea class="edit-field ta" id="editAcao">${o.acao}</textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+      <div>
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:8px">Responsável</div>
+        <input class="edit-field" id="editResp" value="${o.responsavel}">
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:8px">Setor</div>
+        <input class="edit-field" id="editSetor" value="${o.setor||''}">
+      </div>
+    </div>
+    <div class="edit-actions">
+      <button class="btn-save" id="btnSaveEdit" onclick="saveEdit()">SALVAR ALTERAÇÕES</button>
+      <button class="btn-cancel-edit" onclick="switchTab('detalhes')">Cancelar</button>
+      <span style="font-size:10px;color:var(--text3)" id="editMsg"></span>
+    </div>`;
+}
+
+function selectStatus(btn, val){
+  document.querySelectorAll('.sbtn').forEach(b=>{b.className='sbtn';});
+  const cls={
+    'Em Aberto':'sbtn sel-aberto',
+    'Em Andamento':'sbtn sel-andamento',
+    'Concluído':'sbtn sel-concluido'
+  };
+  btn.className=cls[val]||'sbtn';
+  document.getElementById('editStatus').value=val;
+}
+
+async function saveEdit(){
+  const btn=document.getElementById('btnSaveEdit');
+  const msg=document.getElementById('editMsg');
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Salvando...';
+  msg.textContent='';
+  const updates={
+    status:document.getElementById('editStatus').value,
+    prioridade:document.getElementById('editPrio').value,
+    problema:document.getElementById('editProblema').value.trim(),
+    acao:document.getElementById('editAcao').value.trim(),
+    responsavel:document.getElementById('editResp').value.trim(),
+    setor:document.getElementById('editSetor').value.trim()||null,
+  };
+  const {data,error}=await sb.from('ocorrencias').update(updates).eq('id',currentOcorrencia.id).select().single();
+  btn.disabled=false; btn.textContent='SALVAR ALTERAÇÕES';
+  if(error){msg.textContent='Erro: '+error.message;msg.style.color='var(--red)';return;}
+  currentOcorrencia=data;
+  // Refresh detalhes tab
+  document.getElementById('modalTitle').textContent=`Ocorrência #${data.id}`;
+  document.getElementById('modalMeta').innerHTML=`${stBdg(data.status)} ${bdg(data.prioridade)} <span style="font-size:10px;color:var(--text3)">${data.categoria}</span>`;
+  document.getElementById('modalBody').innerHTML=[
+    ['Problema',data.problema],['Ação Tomada',data.acao],['Responsável',data.responsavel],
+    ['Setor',data.setor||'—'],['Categoria',data.categoria],['Prioridade',bdg(data.prioridade)],
+    ['Status',stBdg(data.status)],['Data',fd(data.data_ocorrencia)],
+    ['Registrado por',data.registrado_por||'—'],
+    ['Criado em',`<span style="color:var(--text3)">${fd(data.created_at)}</span>`]
+  ].map(([l,v])=>`<div class="dr"><div class="dl">${l}</div><div class="dv">${v}</div></div>`).join('');
+  toast('Ocorrência atualizada!','ok');
+  switchTab('detalhes');
+  // Refresh lista no fundo
+  if(document.getElementById('pgHistorico').classList.contains('active')) loadHist();
+  if(document.getElementById('pgDashboard').classList.contains('active')) loadDash();
+}
+
+/* ═══════ TIMELINE ═══════ */
+async function loadTimeline(ocorrencia_id){
+  document.getElementById('timeline').innerHTML='<div class="tl-empty"><span class="spinner"></span></div>';
+  const {data,error}=await sb.from('atualizacoes').select('*').eq('ocorrencia_id',ocorrencia_id).order('created_at',{ascending:true});
+  renderTimeline(data||[], ocorrencia_id);
+}
+
+function renderTimeline(atualizacoes, ocorrencia_id){
+  const tl=document.getElementById('timeline');
+  // always show creation entry
+  const criacao=`<div class="tl-item">
+    <div class="tl-dot criacao">🖊</div>
+    <div class="tl-content">
+      <div class="tl-author">${currentOcorrencia.registrado_por||'Sistema'}</div>
+      <div class="tl-date">${fd(currentOcorrencia.created_at)}</div>
+      <div class="tl-text">Ocorrência registrada — ${tr(currentOcorrencia.problema,80)}</div>
+    </div>
+  </div>`;
+  if(!atualizacoes.length){
+    tl.innerHTML=criacao+'<div class="tl-empty" style="padding:10px 0 4px">Nenhuma atualização ainda.</div>';
+    return;
+  }
+  tl.innerHTML=criacao+atualizacoes.map(a=>{
+    const tipo=a.texto.toLowerCase().includes('concluí')||a.texto.toLowerCase().includes('resolvid')?'conclusao':'atualizacao';
+    return`<div class="tl-item">
+      <div class="tl-dot ${tipo}">${tipo==='conclusao'?'✅':'🔄'}</div>
+      <div class="tl-content">
+        <div class="tl-author">${a.autor||'—'}</div>
+        <div class="tl-date">${fd(a.created_at)}</div>
+        <div class="tl-text">${a.texto}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function addUpdate(){
+  const txt=document.getElementById('newUpdateText').value.trim();
+  if(!txt) return;
+  const btn=document.getElementById('btnAddUpdate');
+  const saving=document.getElementById('updateSaving');
+  btn.disabled=true; saving.textContent='Salvando...';
+  const {error}=await sb.from('atualizacoes').insert([{
+    ocorrencia_id:currentOcorrencia.id,
+    texto:txt,
+    autor:usr.email
+  }]);
+  btn.disabled=false; saving.textContent='';
+  if(error){toast('Erro ao salvar atualização','er');return;}
+  document.getElementById('newUpdateText').value='';
+  toast('Atualização adicionada!','ok');
+  loadTimeline(currentOcorrencia.id);
+}
+
+/* ═══════ TABS ═══════ */
+function switchTab(tab){
+  document.querySelectorAll('.mtab').forEach((t,i)=>{
+    const tabs=['detalhes','editar','atualizacoes'];
+    t.classList.toggle('active',tabs[i]===tab);
+  });
+  document.querySelectorAll('.mtab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+}
+
 function closeModal(){document.getElementById('modalBg').classList.remove('open');}
 
-/* ── EXPORT ── */
+/* ═══════ EXPORT ═══════ */
 async function exportCSV(){
   let data=histCache;
   if(!data.length){const{data:d}=await sb.from('ocorrencias').select('*').order('data_ocorrencia',{ascending:false});data=d||[];}
   if(!data.length){toast('Nada para exportar','er');return;}
-  const h=['ID','Problema','Ação','Responsável','Setor','Categoria','Prioridade','Data','Registrado Por'];
-  const rows=data.map(o=>[o.id,`"${(o.problema||'').replace(/"/g,'""')}"`,`"${(o.acao||'').replace(/"/g,'""')}"`,o.responsavel,o.setor||'',o.categoria,o.prioridade,fd(o.data_ocorrencia),o.registrado_por||'']);
+  const h=['ID','Problema','Ação','Responsável','Setor','Categoria','Status','Prioridade','Data','Registrado Por'];
+  const rows=data.map(o=>[o.id,`"${(o.problema||'').replace(/"/g,'""')}"`,`"${(o.acao||'').replace(/"/g,'""')}"`,o.responsavel,o.setor||'',o.categoria,o.status||'',o.prioridade,fd(o.data_ocorrencia),o.registrado_por||'']);
   const csv=[h.join(','),...rows.map(r=>r.join(','))].join('\n');
   const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;a.download=`ocorrencias_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);
 }
 
-/* ── HELPERS ── */
+/* ═══════ HELPERS ═══════ */
 function bdg(p){const m={Crítico:'b-critico',Alto:'b-alto',Médio:'b-medio',Baixo:'b-baixo'};return`<span class="badge ${m[p]||'b-medio'}">${p}</span>`;}
+function stBdg(s){
+  if(!s||s==='Em Aberto') return`<span class="badge s-aberto"><span class="sdot sdot-aberto"></span>Em Aberto</span>`;
+  if(s==='Em Andamento')  return`<span class="badge s-andamento"><span class="sdot sdot-andamento"></span>Em Andamento</span>`;
+  return`<span class="badge s-concluido"><span class="sdot sdot-concluido"></span>Concluído</span>`;
+}
 function tr(s,n){return s&&s.length>n?s.slice(0,n)+'…':(s||'');}
 function fd(d){if(!d)return'—';return new Date(d).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}
 function esc(o){return JSON.stringify(o).replace(/'/g,"&#39;").replace(/"/g,'&quot;');}
 function toast(msg,type){const t=document.getElementById('toast');t.textContent=(type==='ok'?'✅ ':'❌ ')+msg;t.className='toast '+type;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
 
-/* ── INIT ── */
+/* ═══════ INIT ═══════ */
 (async()=>{
   const{data:{session}}=await sb.auth.getSession();
   if(session){usr=session.user;startApp();}
   else{document.getElementById('loginPage').style.display='flex';}
 })();
-
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('loginPage').style.display==='flex')doLogin();});
 </script>
 </body>
