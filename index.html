@@ -36,16 +36,6 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .btn-primary:active{transform:scale(.98);}
 .btn-primary:disabled{background:var(--border2);color:var(--text3);cursor:not-allowed;}
 
-/* ── CONFIG ── */
-#configScreen{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px;}
-.cfg-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:40px 34px;width:100%;max-width:460px;position:relative;}
-.cfg-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--orange));}
-.cfg-title{font-family:var(--sans);font-size:20px;font-weight:800;margin-bottom:6px;}
-.cfg-sub{font-size:11px;color:var(--text2);margin-bottom:26px;line-height:1.8;}
-.cfg-sub a{color:var(--accent);text-decoration:none;}
-.cfg-err{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:var(--red);font-size:11px;padding:10px 13px;border-radius:var(--r);margin-top:12px;display:none;text-align:center;}
-.cfg-note{margin-top:16px;font-size:10px;color:var(--text3);text-align:center;line-height:1.9;}
-
 /* ── LOGIN ── */
 #loginPage{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:var(--bg);padding:20px;}
 .login-wrap{width:100%;max-width:390px;position:relative;}
@@ -203,29 +193,7 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
 </head>
 <body>
 
-<!-- CONFIG -->
-<div id="configScreen">
-  <div class="cfg-box">
-    <div style="font-size:28px;margin-bottom:14px">⚙️</div>
-    <div class="cfg-title">Conectar ao Supabase</div>
-    <div class="cfg-sub">
-      Informe as credenciais do seu projeto Supabase.<br>
-      Não tem projeto? <a href="https://supabase.com" target="_blank">Crie gratuitamente →</a><br>
-      Consulte o arquivo <strong style="color:var(--text)">CONFIGURACAO.html</strong> para o passo a passo.
-    </div>
-    <div class="field">
-      <label>Project URL</label>
-      <input type="text" id="cfgUrl" placeholder="https://lwvqavtfrkotbngyqukk.supabase.co">
-    </div>
-    <div class="field">
-      <label>Anon / Public Key</label>
-      <input type="text" id="cfgKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3dnFhdnRmcmtvdGJuZ3lxdWtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MzgyMzIsImV4cCI6MjA4OTQxNDIzMn0.kEHFz2xb9gc0qHSA6mQ3Ou5RBLEXsDnPJCIPong8ej4">
-    </div>
-    <button class="btn-primary" onclick="saveConfig()">SALVAR E CONECTAR</button>
-    <div class="cfg-err" id="cfgErr">Credenciais inválidas ou tabela "ocorrencias" não encontrada.</div>
-    <div class="cfg-note">Salvo no navegador — configure uma vez por dispositivo.</div>
-  </div>
-</div>
+
 
 <!-- LOGIN -->
 <div id="loginPage">
@@ -267,8 +235,7 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
       <div class="nav-item active" onclick="go('dashboard')"><span class="ni">📊</span>Dashboard</div>
       <div class="nav-item" onclick="go('registrar')"><span class="ni">➕</span>Nova Ocorrência</div>
       <div class="nav-item" onclick="go('historico')"><span class="ni">📋</span>Histórico</div>
-      <div class="nav-sep"></div>
-      <div class="nav-item" onclick="go('recfg')" style="font-size:11px"><span class="ni">⚙️</span>Reconfigurar</div>
+
     </nav>
     <div class="sb-user">
       <div class="u-name" id="sbName">—</div>
@@ -356,15 +323,7 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
       </div>
     </div>
 
-    <!-- RECONFIGURAR -->
-    <div id="pgRecfg" class="page">
-      <div class="pg-header"><div><h2>Reconfigurar</h2><p>Atualizar credenciais Supabase</p></div></div>
-      <div class="form-card" style="max-width:480px">
-        <div class="field"><label>Project URL</label><input type="text" id="cfgUrl2" placeholder="https://xxxxxxxxxxx.supabase.co"></div>
-        <div class="field"><label>Anon / Public Key</label><input type="text" id="cfgKey2" placeholder="eyJ..."></div>
-        <div class="form-actions"><button class="btn-submit" onclick="saveConfigInApp()">SALVAR</button></div>
-      </div>
-    </div>
+
 
   </main>
 </div>
@@ -381,41 +340,10 @@ tbody td{padding:13px 12px;color:var(--text2);vertical-align:top;}
 <div class="toast" id="toast"></div>
 
 <script>
-const CFG_KEY = 'ti_sb_cfg';
+const SB_URL = 'https://lwvqavtfrkotbngyqukk.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3dnFhdnRmcmtvdGJuZ3lxdWtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MzgyMzIsImV4cCI6MjA4OTQxNDIzMn0.kEHFz2xb9gc0qHSA6mQ3Ou5RBLEXsDnPJCIPong8ej4';
 let sb = null, usr = null, histCache = [];
-
-/* ── CONFIG ── */
-function getConfig(){ const r=localStorage.getItem(CFG_KEY); return r?JSON.parse(r):null; }
-function initSB(url,key){ sb = window.supabase.createClient(url,key); }
-
-async function saveConfig(){
-  const url=document.getElementById('cfgUrl').value.trim();
-  const key=document.getElementById('cfgKey').value.trim();
-  const err=document.getElementById('cfgErr');
-  err.style.display='none';
-  if(!url.startsWith('https://')||!key.startsWith('eyJ')){ err.style.display='block'; return; }
-  try{
-    initSB(url,key);
-    const {error}=await sb.from('ocorrencias').select('id').limit(1);
-    if(error) throw error;
-    localStorage.setItem(CFG_KEY,JSON.stringify({url,key}));
-    document.getElementById('configScreen').style.display='none';
-    document.getElementById('loginPage').style.display='flex';
-  }catch(e){
-    err.textContent='Erro: '+(e.message||'verifique URL, chave e se a tabela "ocorrencias" existe.');
-    err.style.display='block';
-  }
-}
-
-async function saveConfigInApp(){
-  const url=document.getElementById('cfgUrl2').value.trim();
-  const key=document.getElementById('cfgKey2').value.trim();
-  if(!url||!key) return;
-  localStorage.setItem(CFG_KEY,JSON.stringify({url,key}));
-  initSB(url,key);
-  toast('Configuração salva!','ok');
-  go('dashboard');
-}
+sb = window.supabase.createClient(SB_URL, SB_KEY);
 
 /* ── AUTH ── */
 async function doLogin(){
@@ -461,10 +389,6 @@ function go(id){
   if(items[niMap[id]]) items[niMap[id]].classList.add('active');
   if(id==='dashboard') loadDash();
   if(id==='historico') loadHist();
-  if(id==='recfg'){
-    const c=getConfig();
-    if(c){document.getElementById('cfgUrl2').value=c.url;document.getElementById('cfgKey2').value=c.key;}
-  }
   closeSb();
 }
 
@@ -581,10 +505,6 @@ function toast(msg,type){const t=document.getElementById('toast');t.textContent=
 
 /* ── INIT ── */
 (async()=>{
-  const cfg=getConfig();
-  if(!cfg){document.getElementById('configScreen').style.display='flex';return;}
-  initSB(cfg.url,cfg.key);
-  document.getElementById('configScreen').style.display='none';
   const{data:{session}}=await sb.auth.getSession();
   if(session){usr=session.user;startApp();}
   else{document.getElementById('loginPage').style.display='flex';}
